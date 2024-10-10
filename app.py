@@ -8,8 +8,10 @@ def calculate_age(dob):
     today = date.today()
     birth_date = datetime.strptime(dob, "%Y-%m-%d").date()
     age = today.year - birth_date.year
-    # Introduce a bug: forget to check if birthday has occurred this year
-    return age  # This might be off by one year
+    # Check if birthday has occurred this year
+    if today < date(today.year, birth_date.month, birth_date.day):
+        age -= 1
+    return age
 
 def get_zodiac_sign(dob):
     month, day = map(int, dob.split('-')[1:])
