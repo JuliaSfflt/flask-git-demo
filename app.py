@@ -32,6 +32,10 @@ def days_to_birthday(dob):
         next_birthday = date(today.year + 1, dob.month, dob.day)
     return (next_birthday - today).days
     
+import random
+
+def get_lucky_number():
+    return random.randint(1, 100)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -41,9 +45,12 @@ def index():
         age = calculate_age(dob)
         zodiac = get_zodiac_sign(dob)
         days_to_bday = days_to_birthday(dob)
-        message = f"Greetings, {name}! You're {age} years old with the zodiac sign {zodiac}. Your next birthday is in {days_to_bday} days."
+        lucky_number = get_lucky_number()
+        message = f"Greetings, {name}! You're {age} years old with the zodiac sign {zodiac}. Your next birthday is in {days_to_bday} days. Your lucky number is {lucky_number}!"
         return render_template('result.html', message=message)
     return render_template('index.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
