@@ -1,4 +1,4 @@
-from app import is_birthday_today
+from app import is_birthday_today, calculate_age
 from datetime import date
 import pytest
 from app import app
@@ -21,3 +21,8 @@ def test_birthday_today(client):
         'dob': f"{today.year}-{today.month:02d}-{today.day:02d}"
     }, follow_redirects=True)
     assert b"Happy Birthday!" in response.data
+
+def test_calculate_age():
+    today = date.today()
+    assert calculate_age(f"{today.year-30}-{today.month:02d}-{today.day:02d}") == 30
+    assert calculate_age(f"{today.year-30}-{today.month:02d}-{today.day+1:02d}") == 29  # This will fail

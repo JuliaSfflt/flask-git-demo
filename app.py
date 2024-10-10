@@ -5,11 +5,11 @@ app = Flask(__name__)
 
 
 def calculate_age(dob):
-    today = datetime.today()
-    birth_date = datetime.strptime(dob, "%Y-%m-%d")
-    age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
-    return age
-
+    today = date.today()
+    birth_date = datetime.strptime(dob, "%Y-%m-%d").date()
+    age = today.year - birth_date.year
+    # Introduce a bug: forget to check if birthday has occurred this year
+    return age  # This might be off by one year
 
 def get_zodiac_sign(dob):
     month, day = map(int, dob.split('-')[1:])
@@ -68,5 +68,3 @@ if __name__ == '__main__':
 
 
     
-from datetime import datetime
-
